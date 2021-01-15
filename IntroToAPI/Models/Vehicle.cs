@@ -7,6 +7,18 @@ using System.Threading.Tasks;
 
 namespace IntroToAPI.Models
 {
+    // We took the following steps to get the properties for this class:
+        // 1. Visited the "swapi.dev/documentation" site and clicked on "Vehicles" under "Resources"
+        // 2. Copied all the code from the "Example response" section
+        // 3. Find a Json to C# converter online (we used json2csharp.com)
+        // 4. Paste the Json object into the Json section
+        // 5. Click "Use Pascal Case" and "Add JsonProperty Attributes in the "Settings section
+        // 6. Click "Convert"
+        // 7. Copy all the code within the C# class that was created
+        // 8. Paste the C# code within the "Person" class below
+            // Note: there will be error messages under all the "JsonProperty" attributes
+        // 9. Click on one of the "JsonProperty" attributes and click "Ctrl + ."
+        // 10. Click "Install package 'Newtonsoft.Json'"
     class Vehicle
     {
         [JsonProperty("cargo_capacity")]

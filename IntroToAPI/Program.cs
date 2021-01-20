@@ -63,23 +63,35 @@ namespace IntroToAPI
                 }
             }
 
+            // The main method cannot be asynchronous
+            // You can't call async methods within methods that aren't async unless you use "await" or ".Result"
+
             Console.WriteLine();
 
+            // Creating a new SWAPIService instance
             SWAPIService service = new SWAPIService();
+            // No "Person" object in this scope yet, so we're creating one here and setting it equal to whatever
+                // the "SWAPIService" object returns using the "GetPersonAsync" method, a url, and the ".Result" property.
             Person person = service.GetPersonAsync("https://swapi.dev/api/people/11").Result;
+            // Making sure the "person" object isn't null with an if loop
             if (person != null)
             {
+                // Writing the "person" object's ".Name" property to the console for proof of concept
                 Console.WriteLine(person.Name);
-
+                // Using a nested "foreach" loop to go through each "Person" object's ".Vehicles" property within the vehicleUrl
                 foreach(var vehicleUrl in person.Vehicles)
                 {
+                    // Getting the "Vehicle" objects by using the "SWAPIService" and accessing the "vehicles" through the
+                        // "GetVehicleAsync" method and passing in the "vehicleUrl" string and finally using the ".Result" operator
                     var vehicle = service.GetVehicleAsync(vehicleUrl).Result;
+                    // Writing out each vehicle name to the console for proof of concept
                     Console.WriteLine(vehicle.Name);
                 }
             }
 
             Console.WriteLine();
 
+            // Using the generic "GetAsync" method to obtain a "Vehicle" object (code very similar to above)
             var genericResponse = service.GetAsync<Vehicle>("https://swapi.dev/api/vehicles/4").Result;
             if(genericResponse != null)
             {
@@ -92,12 +104,15 @@ namespace IntroToAPI
 
             Console.WriteLine();
 
+            // Passing in the "Person" class to the "SearchResult" class to obtain all the "Person" objects (which we call
+                // "skywalkers") with the last name of "skywalker" in a search.
             SearchResult<Person> skywalkers = service.GetPersonSearchAsync("skywalker").Result;
             foreach(Person p in skywalkers.Results)
             {
                 Console.WriteLine(p.Name);
             }
 
+            // Searching for a vehicle in two different ways
             var genericSearch = service.GetSearchAsync<Vehicle>("speeder", "vehicles").Result;
             var vehicleSearch = service.GetVehicleSearchAsync("speeder").Result;
 
